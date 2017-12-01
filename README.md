@@ -20,3 +20,12 @@ Some key features:
 * Alexandru Antochi
 * Bogdan Matei
 * Ionut Arhire
+
+# Architecture
+
+The application will be a default MVC type, using Angular. The rendering will be done on the client's side and the comomands from the client will be processed by the server and sent to the arduino board remotely. 
+
+The database layer will use SQL Server. 
+
+
+

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoLib", "ArduinoLib\ArduinoLib.csproj", "{C982779F-10F9-40F5-A899-00DD893FD2B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibTest", "LibTest\LibTest.csproj", "{A50FFF86-73FB-4D1E-B182-617990B5614A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C982779F-10F9-40F5-A899-00DD893FD2B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C982779F-10F9-40F5-A899-00DD893FD2B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C982779F-10F9-40F5-A899-00DD893FD2B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C982779F-10F9-40F5-A899-00DD893FD2B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A50FFF86-73FB-4D1E-B182-617990B5614A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A50FFF86-73FB-4D1E-B182-617990B5614A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A50FFF86-73FB-4D1E-B182-617990B5614A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A50FFF86-73FB-4D1E-B182-617990B5614A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E0DFA97-732F-4D11-A529-BCECCCE90B25}
+	EndGlobalSection
+EndGlobal

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
-using Business.Dtos;
-using Domain.Entities;
 using Repositories;
 
 namespace Business.Services

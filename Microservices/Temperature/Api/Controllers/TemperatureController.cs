@@ -1,7 +1,6 @@
 ﻿using System;
 using Business.Dtos;
 using Business.Services;
-using EnsureThat;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers

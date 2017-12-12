@@ -5,7 +5,7 @@ using Persistence;
 
 namespace Integration.Tests.Base
 {
-    public abstract class BaseIntegrationTest
+    public abstract class BaseIntegrationTests
     {
         protected virtual bool UseSqlServer => true;
 

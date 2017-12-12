@@ -9,7 +9,7 @@ using Repositories;
 namespace Integration.Tests
 {
     [TestClass]
-    public class TemperatureRepositoryIntegrationTests : BaseIntegrationTest
+    public class TemperatureRepositoryIntegrationTests : BaseIntegrationTests
     {
         [TestMethod]
         public void Given_TemperatureRepository_When_AddingATemperatureRecord_Then_TheRecordShouldBeMemorized()

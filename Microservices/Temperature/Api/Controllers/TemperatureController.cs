@@ -9,32 +9,30 @@ namespace Api.Controllers
     [Route("api/v1/temperature")]
     public class TemperatureController : Controller
     {
-        private readonly ITemperatureServices _temperatureServices;
+        private readonly ITemperatureService _temperatureService;
 
-        public TemperatureController(ITemperatureServices temperatureServices)
+        public TemperatureController(ITemperatureService temperatureService)
         {
-            _temperatureServices = temperatureServices;
+            _temperatureService = temperatureService;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var results = _temperatureServices.GetAllTemperatureRecords();
+            var results = _temperatureService.GetAllTemperatureRecords();
 
             return Ok(results);
         }
 
         [HttpGet("{userid}")]
-        public IActionResult GetByUser(Guid userid)
+        public IActionResult GetByUser(Guid userId)
         {
-            EnsureArg.IsNotEmpty(userid);
-
-            var result = _temperatureServices.GetTemperatureRecord(userid);
-
-            if (result == null)
+            if (userId == Guid.Empty)
             {
-                return NotFound();
+                return BadRequest();
             }
+
+            var result = _temperatureService.GetUserTemperatureRecords(userId);
 
             return Ok(result);
         }
@@ -47,9 +45,9 @@ namespace Api.Controllers
                 return BadRequest();
             }
 
-            _temperatureServices.AddTemperatureRecord(record);
+            var id = _temperatureService.AddTemperatureRecord(record);
 
-            return NoContent();
+            return Created("api/v1/temperature/" + id, id);
         }
     }
 }

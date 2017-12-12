@@ -5,12 +5,12 @@ using Business.Dtos;
 
 namespace Business.Services
 {
-    public interface ITemperatureServices
+    public interface ITemperatureService
     {
         GetAllTemperatureRecordsDto GetAllTemperatureRecords();
 
-        GetTemperatureRecordDto GetTemperatureRecord(Guid id);
+        GetUserTemperatureRecordsDto GetUserTemperatureRecords(Guid id);
 
-        void AddTemperatureRecord(AddTemperatureRecordDto record);
+        Guid AddTemperatureRecord(AddTemperatureRecordDto record);
     }
 }

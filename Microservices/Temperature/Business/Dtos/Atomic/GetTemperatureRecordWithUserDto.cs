@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Domain.Entities
+namespace Business.Dtos
 {
-    public class TemperatureRecord
+    public class GetTemperatureRecordWithUserDto
     {
-        [Key]
-        public Guid Id { get; set; }
-
-        [Required]
         public Guid UserId { get; set; }
 
-        [Required]
         public double Value { get; set; }
 
-        [Required]
         public DateTime Time { get; set; }
     }
 }

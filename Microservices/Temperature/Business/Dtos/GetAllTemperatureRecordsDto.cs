@@ -6,9 +6,9 @@ namespace Business.Dtos
 {
     public class GetAllTemperatureRecordsDto
     {
-        public List<GetTemperatureRecordDto> TemperatureRecords;
+        public List<GetTemperatureRecordWithUserDto> TemperatureRecords;
 
-        public GetAllTemperatureRecordsDto(List<GetTemperatureRecordDto> temperatureRecords)
+        public GetAllTemperatureRecordsDto(List<GetTemperatureRecordWithUserDto> temperatureRecords)
         {
             TemperatureRecords = temperatureRecords;
         }

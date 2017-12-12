@@ -11,7 +11,7 @@ using System;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20171211223327_AddedBaseDatabaseStructure")]
+    [Migration("20171212064152_AddedBaseDatabaseStructure")]
     partial class AddedBaseDatabaseStructure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,14 +23,16 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.TemperatureRecord", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Time");
 
+                    b.Property<Guid>("UserId");
+
                     b.Property<double>("Value");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("TemperatureRecords");
                 });

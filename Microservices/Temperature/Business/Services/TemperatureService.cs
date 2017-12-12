@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using AutoMapper;
+using Business.Dtos;
+using Domain.Entities;
+using Repositories;
+
+namespace Business.Services
+{
+    public partial class TemperatureService : ITemperatureService
+    {
+        private readonly ITemperatureRepository _repo;
+        private readonly IMapper _mapper;
+
+        public TemperatureService(ITemperatureRepository repo, IMapper mapper)
+        {
+            _repo = repo;
+            _mapper = mapper;
+        }
+    }
+}

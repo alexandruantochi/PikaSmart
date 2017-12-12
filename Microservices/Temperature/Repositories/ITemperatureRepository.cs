@@ -9,7 +9,7 @@ namespace Repositories
     {
         List<TemperatureRecord> GetAll();
             
-        TemperatureRecord GetByUserId(Guid id);
+        List<TemperatureRecord> GetByUserId(Guid userId);
 
         void Add(TemperatureRecord record);
 

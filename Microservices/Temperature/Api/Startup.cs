@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Persistence;
 using Repositories;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Api
 {
@@ -32,13 +33,18 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IDatabaseContext, DatabaseContext>();
-            services.AddTransient<ITemperatureServices, TemperatureServices>();
+            services.AddTransient<ITemperatureService, TemperatureService>();
             services.AddTransient<ITemperatureRepository, TemperatureRepository>();
 
-            var connection = @"Server = .\SQLEXPRESS; Database=Temperature.Development; Trusted_Connection = true;";
+            var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
 
-            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddTemperatureRecordValidation>()); ;
+            services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddTemperatureRecordValidation>());
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Temperature Microservice", Version = "v1" });
+            });
 
             services.AddAutoMapper();
         }
@@ -46,6 +52,15 @@ namespace Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Temperature Microservice");
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

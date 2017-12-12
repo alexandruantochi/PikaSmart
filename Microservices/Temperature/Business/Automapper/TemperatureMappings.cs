@@ -12,6 +12,7 @@ namespace Business.Automapper
         public TemperatureMappings()
         {
             CreateMap<TemperatureRecord, GetTemperatureRecordDto>();
+            CreateMap<TemperatureRecord, GetTemperatureRecordWithUserDto>();
             CreateMap<AddTemperatureRecordDto, TemperatureRecord>();
         }
     }

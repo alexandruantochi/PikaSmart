@@ -22,9 +22,9 @@ namespace Repositories
             return _context.TemperatureRecords.ToList();
         }
 
-        public TemperatureRecord GetByUserId(Guid id)
+        public List<TemperatureRecord> GetByUserId(Guid userId)
         {
-            return _context.TemperatureRecords.FirstOrDefault(tr => tr.UserId == id);
+            return _context.TemperatureRecords.Where(x => x.UserId == userId).ToList();
         }
 
         public void Add(TemperatureRecord record)

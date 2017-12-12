@@ -11,6 +11,7 @@
     <Compile Remove="Migrations\20171211222314_Added_Base_Database_Structure.cs" />
     <Compile Remove="Migrations\20171211222535_AddedBaseDatabaseStructure.cs" />
     <Compile Remove="Migrations\20171211222924_AddedBaseDatabaseStructure.cs" />
+    <Compile Remove="Migrations\20171211223327_AddedBaseDatabaseStructure.cs" />
   </ItemGroup>
 
   <ItemGroup>

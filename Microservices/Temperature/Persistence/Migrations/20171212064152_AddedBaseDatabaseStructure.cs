@@ -12,13 +12,14 @@ namespace Persistence.Migrations
                 name: "TemperatureRecords",
                 columns: table => new
                 {
-                    UserId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Time = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     Value = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TemperatureRecords", x => x.UserId);
+                    table.PrimaryKey("PK_TemperatureRecords", x => x.Id);
                 });
         }
 

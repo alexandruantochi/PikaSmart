@@ -22,14 +22,16 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.TemperatureRecord", b =>
                 {
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("Time");
 
+                    b.Property<Guid>("UserId");
+
                     b.Property<double>("Value");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("TemperatureRecords");
                 });

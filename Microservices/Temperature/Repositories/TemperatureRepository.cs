@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Repositories
@@ -17,12 +18,12 @@ namespace Repositories
 
         public List<TemperatureRecord> GetAll()
         {
-            return _context.TemperatureRecords.ToList();
+            return _context.TemperatureRecords.AsNoTracking().ToList();
         }
 
         public List<TemperatureRecord> GetByUserId(Guid userId)
         {
-            return _context.TemperatureRecords.Where(x => x.UserId == userId).ToList();
+            return _context.TemperatureRecords.Where(x => x.UserId == userId).AsNoTracking().ToList();
         }
 
         public void Add(TemperatureRecord record)

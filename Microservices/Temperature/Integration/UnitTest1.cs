@@ -8,6 +8,7 @@ namespace Integration
         [TestMethod]
         public void TestMethod1()
         {
+			 // tests to be added
         }
     }
 }

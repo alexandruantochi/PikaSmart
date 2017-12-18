@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Persistence.Maps
 {
-    class TemperatureRecordMap : IEntityTypeConfiguration<TemperatureRecord>
+    sealed class TemperatureRecordMap : IEntityTypeConfiguration<TemperatureRecord>
     {
         public void Configure(EntityTypeBuilder<TemperatureRecord> builder)
         {

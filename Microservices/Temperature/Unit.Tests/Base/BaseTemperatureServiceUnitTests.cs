@@ -10,7 +10,7 @@ namespace Unit.Tests.Base
     {
         protected Mock<IMapper> Mapper;
         protected Mock<ITemperatureRepository> Repo;
-        public Mock<ITemperatureService> Service;
+        protected Mock<ITemperatureService> Service;
 
         [TestInitialize]
         public virtual void Setup()

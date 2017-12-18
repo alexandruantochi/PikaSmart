@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20171211220147_Added_Basic_Database_Structure.cs" />
+    <Compile Remove="Migrations\20171211220427_Added_Basic_Database_Structure.cs" />
+    <Compile Remove="Migrations\20171211221342_Added_Basic_Database_Structure.cs" />
+    <Compile Remove="Migrations\20171211222314_Added_Base_Database_Structure.cs" />
+    <Compile Remove="Migrations\20171211222535_AddedBaseDatabaseStructure.cs" />
+    <Compile Remove="Migrations\20171211222924_AddedBaseDatabaseStructure.cs" />
+    <Compile Remove="Migrations\20171211223327_AddedBaseDatabaseStructure.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>

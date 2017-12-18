@@ -19,12 +19,19 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/semantic-ui-css/semantic.min.css",
-        "styles.css"
+        "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/material-dashboard/assets/sass/material-dashboard.scss",
+        "../node_modules/material-dashboard/assets/css/demo.css"
       ],
-      "scripts": [ 
+      "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/semantic-ui-css/semantic.min.js"
+        "../node_modules/bootstrap/dist/js/bootstrap.js",
+        "../node_modules/bootstrap-material-design/dist/js/ripples.min.js",
+        "../node_modules/bootstrap-material-design/dist/js/material.min.js",
+        "../node_modules/arrive/src/arrive.js",
+        "../node_modules/moment/moment.js",
+        "../node_modules/bootstrap-notify/bootstrap-notify.js",
+        "../node_modules/chartist/dist/chartist.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

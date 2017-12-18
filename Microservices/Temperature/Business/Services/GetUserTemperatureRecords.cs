@@ -14,6 +14,7 @@ namespace Business.Services
             var results = _mapper.Map<List<TemperatureRecord>, List<GetTemperatureRecordDto>>(findings);
 
             return new GetUserTemperatureRecordsDto(results);
+
         }
     }
 }

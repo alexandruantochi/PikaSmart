@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
+using System.Collections.Generic;
 
 namespace Persistence.Migrations
 {
-    public partial class AddedBaseDatabaseStructure : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

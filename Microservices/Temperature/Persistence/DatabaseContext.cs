@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Contraints;
+using Persistence.Maps;
 
 namespace Persistence
 {
@@ -12,13 +12,9 @@ namespace Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new IdConfig());
-            modelBuilder.ApplyConfiguration(new UserIdConfig());
-            modelBuilder.ApplyConfiguration(new TimeConfig());
-            modelBuilder.ApplyConfiguration(new ValueConfig());
-
+            modelBuilder.ApplyConfiguration(new TemperatureRecordMap());
         }
         
         public DbSet<TemperatureRecord> TemperatureRecords { get; set; }

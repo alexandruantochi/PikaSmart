@@ -14,116 +14,115 @@ namespace Unit.Tests
     public class TemperatureControllerUnitTests : BaseTemperatureServiceUnitTests
     {
         [TestMethod]
-        public void Given_Controller_When_Always_Then_GetAllActionResult_ShouldReturnOK()
+        public void Given_GetAll_Then_ShouldRespondWithOK()
         {
-            try
-            {
+            //Arrange
+            var records = new GetAllTemperatureRecordsDto
+            (
+                new List<GetTemperatureRecordWithUserDto>()
+            );
 
-                //Arrange
-                var controller = new TemperatureController(Service.Object);
+            Service.Setup(serv => serv.GetAllTemperatureRecords())
+                .Returns(records);
 
-                //Act
-                var result = controller.GetAll();
+            var controller = CreateSut();
 
-                //Assert
-                result.Should().BeOfType(typeof(OkObjectResult));
-            }
-            catch (NullReferenceException e)
-            {
-            }
+            //Act
+            var response = controller.GetAll();
+
+            //Assert
+            response.Should().BeOfType<OkObjectResult>();
         }
 
         [TestMethod]
-        public void Given_Controller_When_IdIsValid_Then_GetByUserId_ShouldReturnOK()
+        public void Given_GetByUser_When_UserIdIsNotEmpty_Then_ShouldReturnUserTemperatureRecordsAndRespondWithOk()
         {
-
             //Arrange
-            Guid userId = new Guid("C06855B4-C8EA-482F-8C0C-889AA568FEFB");
+            var userId = new Guid("C06855B4-C8EA-482F-8C0C-889AA568FEFB");
 
-            var records = new List<GetTemperatureRecordDto>()
-            {
-                new GetTemperatureRecordDto
+            var records = new GetUserTemperatureRecordsDto
+            (
+                new List<GetTemperatureRecordDto>()
                 {
-                    Value = 60,
-                    Time = DateTime.Now
+                    new GetTemperatureRecordDto
+                    {
+                        Value = 60,
+                        Time = DateTime.Now
+                    }
                 }
-            };
+            );
 
             Service.Setup(serv => serv.GetUserTemperatureRecords(userId))
-                .Returns(new GetUserTemperatureRecordsDto(records));
+                .Returns(records);
 
-            var controller = new TemperatureController(Service.Object);
+            var controller = CreateSut();
 
             //Act
-            var result = controller.GetByUser(userId) as OkObjectResult;
-
-            var model = result?.Value as GetUserTemperatureRecordsDto;
+            var response = controller.GetByUser(userId);
 
             //Assert
-            model?.TemperatureRecords.Count.Should().BeGreaterThan(0);
-            result?.StatusCode.Should().Be(200);
-
-
+            response.Should().BeOfType<OkObjectResult>();
+            var result = (response as OkObjectResult)?.Value;
+            var values = (result as GetUserTemperatureRecordsDto)?.TemperatureRecords;
+            values?.Count.Should().Be(1);
         }
 
         [TestMethod]
-        public void Given_Controller_When_IdIsInvalid_Then_GetByUserId_ShouldReturn_BadRequest_IfDoesntExists()
+        public void Given_GetByUser_When_UserIdIsEmpty_Then_ShouldRespondWithBadRequest()
         {
-
             //Arrange
-            Guid id = new Guid("C06855B4-C8EA-482F-8C0C-009AA568FEFB");
-
-            Service.Setup(serv => serv.GetUserTemperatureRecords(id))
-                .Returns(new GetUserTemperatureRecordsDto(null));
-
-            var controller = new TemperatureController(Service.Object);
+            var id = Guid.Empty;
+            var controller = CreateSut();
 
             //Act
-            var result = controller.GetByUser(id) as BadRequestResult;
+            var response = controller.GetByUser(id);
 
             //Assert
-            result?.StatusCode.Should().Be(400);
-
+            response.Should().BeOfType<BadRequestResult>();
         }
 
         [TestMethod]
-        public void Given_Controller_When_ValidModelState_Then_Create_ShouldReturnOk()
+        public void Given_Create_When_ValidModelState_Then_ShouldRespondWithCreated()
         {
-
             //Arrange
-            AddTemperatureRecordDto tmp = new AddTemperatureRecordDto();
-            Guid id = new Guid();
+            var addRecord = new AddTemperatureRecordDto();
+            var id = new Guid();
 
-            Service.Setup(serv => serv.AddTemperatureRecord(tmp))
+            Service.Setup(serv => serv.AddTemperatureRecord(addRecord))
                 .Returns(id);
 
-            var controller = new TemperatureController(Service.Object);
+            var controller = CreateSut();
+
             //Act
-            var result = controller.Create(tmp) as CreatedResult;
+            var response = controller.Create(addRecord);
 
             //Assert
-            result?.StatusCode.Should().Be(201);
-
+            response.Should().BeOfType<CreatedResult>();
         }
 
         [TestMethod]
-        public void Given_Controller_When_InvalidModelState_Then_Create_ShouldReturnBadRequest()
+        public void Given_Create_When_InvalidModelState_Then_ShouldRespondWithBadRequest()
         {
             //Arrange
-            AddTemperatureRecordDto tmp = new AddTemperatureRecordDto();
-            Guid id = new Guid();
+            var addRecord = new AddTemperatureRecordDto();
+            var id = new Guid();
 
-            Service.Setup(serv => serv.AddTemperatureRecord(tmp))
+            Service.Setup(serv => serv.AddTemperatureRecord(addRecord))
                 .Returns(id);
 
-            var controller = new TemperatureController(Service.Object);
+            var controller = CreateSut();
             controller.ModelState.SetModelValue("", ValueProviderResult.None);
+
             //Act
-            var result = controller.Create(tmp) as BadRequestResult;
+            var response = controller.Create(addRecord);
 
             //Assert
-            result?.StatusCode.Should().Be(400);
+            response.Should().BeOfType<BadRequestResult>();
         }
 
+        private TemperatureController CreateSut()
+        {
+            return new TemperatureController(Service.Object);
+        }
     }
 }

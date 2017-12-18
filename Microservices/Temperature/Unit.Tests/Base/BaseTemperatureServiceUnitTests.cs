@@ -16,8 +16,8 @@ namespace Unit.Tests.Base
         public virtual void Setup()
         {
             Mapper = new Mock<IMapper>();
-            Service = new Mock<ITemperatureService>();
             Repo = new Mock<ITemperatureRepository>();
+            Service = new Mock<ITemperatureService>();
         }
     }
 }

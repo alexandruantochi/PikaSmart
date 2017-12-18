@@ -2,6 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Persistence;
 using System;
 
 namespace Persistence.Migrations
@@ -19,13 +23,17 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.TemperatureRecord", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
 
-                    b.Property<DateTime>("Time");
+                    b.Property<DateTime>("Time")
+                        .HasColumnName("Time");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnName("UserId");
 
-                    b.Property<double>("Value");
+                    b.Property<double>("Value")
+                        .HasColumnName("Value");
 
                     b.HasKey("Id");
 

@@ -3,13 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Persistence;
 using System;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20171212064152_AddedBaseDatabaseStructure")]
-    partial class AddedBaseDatabaseStructure
+    [Migration("20171218173139_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,13 +24,17 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.TemperatureRecord", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
 
-                    b.Property<DateTime>("Time");
+                    b.Property<DateTime>("Time")
+                        .HasColumnName("Time");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnName("UserId");
 
-                    b.Property<double>("Value");
+                    b.Property<double>("Value")
+                        .HasColumnName("Value");
 
                     b.HasKey("Id");
 

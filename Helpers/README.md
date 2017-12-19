@@ -9,6 +9,8 @@ Used to make copies of our microservice prototype, each of the copies having a d
 
 Ex: `dotnet run "C:\Users\Scooby Doo\Desktop\Temperature" "C:\Users\Scooby Doo\Desktop\Pressure" Temperature Pressure`
 
+* build your new solution and you're done
+
 ## Obs: 
 
 * the <destination_root> will be created if not already existing.

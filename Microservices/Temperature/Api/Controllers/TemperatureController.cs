@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using Business.Dtos;
-using Business.Services;
+using Business.Services.Commands.AddTemperatureRecord;
+using Business.Services.Queries.GetAllTemperatureRecords;
+using Business.Services.Queries.GetUserTemperatureRecords;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -8,45 +13,59 @@ namespace Api.Controllers
     [Route("api/v1/temperature")]
     public class TemperatureController : Controller
     {
-        private readonly ITemperatureService _temperatureService;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public TemperatureController(ITemperatureService temperatureService)
+        public TemperatureController(IMediator mediator, IMapper mapper)
         {
-            _temperatureService = temperatureService;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var results = _temperatureService.GetAllTemperatureRecords();
+            var query = new GetAllTemperatureRecordsQuery();
+
+            var rawResults = await _mediator.Send(query);
+
+            var results = _mapper.Map<GetAllTemperatureRecordsDto>(rawResults);
 
             return Ok(results);
         }
 
         [HttpGet("{userid}")]
-        public IActionResult GetByUser(Guid userId)
+        public async Task<IActionResult> GetByUser(Guid userId)
         {
             if (userId == Guid.Empty)
             {
                 return BadRequest();
             }
 
-            var result = _temperatureService.GetUserTemperatureRecords(userId);
+            var query = new GetUserTemperatureRecordsQuery(userId);
 
-            return Ok(result);
+            var rawResults = await _mediator.Send(query);
+
+            var results = _mapper.Map<GetUserTemperatureRecordsDto>(rawResults);
+
+            return Ok(results);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] AddTemperatureRecordDto record)
+        public async Task<IActionResult> Create([FromBody] AddTemperatureRecordDto record)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var id = _temperatureService.AddTemperatureRecord(record);
+            var command = _mapper.Map<AddTemperatureRecordCommand>(record);
 
-            return Created("api/v1/temperature/" + id, id);
+            var result = await _mediator.Send(command);
+
+            var createdRecordId = result.Id;
+
+            return Created("api/v1/temperature/" + createdRecordId, createdRecordId);
         }
     }
 }

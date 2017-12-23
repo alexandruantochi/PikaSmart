@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Repositories
 {
     public interface ITemperatureRepository
     {
-        List<TemperatureRecord> GetAll();
+        Task<List<TemperatureRecord>> GetAllAsync();
             
-        List<TemperatureRecord> GetByUserId(Guid userId);
+        Task<List<TemperatureRecord>> GetByUserIdAsync(Guid userId);
 
-        void Add(TemperatureRecord record);
+        Task<EntityEntry<TemperatureRecord>> AddAsync(TemperatureRecord record);
 
-        void SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

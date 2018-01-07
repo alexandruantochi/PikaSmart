@@ -5,14 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\available_options" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\available_options" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="HoloJson.Core" Version="1.0.2" />
     <PackageReference Include="System.IO.Ports" Version="4.4.0" />
   </ItemGroup>

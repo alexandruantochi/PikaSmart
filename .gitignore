@@ -288,5 +288,4 @@ __pycache__/
 *.xsd.cs
 /.sonarqube/conf/vbnet
 /.sonarqube/conf
-/Microservices
 /sonar_scanner

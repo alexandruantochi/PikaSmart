@@ -1,23 +1,23 @@
 ﻿using AutoMapper;
-using Business.Services;
+using MediatR;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Repositories;
 
 namespace Unit.Tests.Base
 {
-    public abstract class BaseTemperatureServiceUnitTests
+    public abstract class BaseUnitTests
     {
         protected Mock<IMapper> Mapper;
         protected Mock<ITemperatureRepository> Repo;
-        protected Mock<ITemperatureService> Service;
+        protected Mock<IMediator> Mediator;
 
         [TestInitialize]
         public virtual void Setup()
         {
             Mapper = new Mock<IMapper>();
             Repo = new Mock<ITemperatureRepository>();
-            Service = new Mock<ITemperatureService>();
+            Mediator = new Mock<IMediator>();
         }
     }
 }

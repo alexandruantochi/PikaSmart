@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
@@ -7,6 +9,6 @@ namespace Persistence
     {
         DbSet<TemperatureRecord> TemperatureRecords { get; set; }
 
-        int SaveChanges();
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

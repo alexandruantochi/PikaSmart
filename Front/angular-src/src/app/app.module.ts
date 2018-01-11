@@ -4,21 +4,22 @@ import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
-import {fakeBackendProvider} from './_helpers/index';
+import {fakeBackendProvider} from './_helpers/';
 import {AppRoutingModule} from './app.routing';
 import {ComponentsModule} from './components/components.module';
 import {AppComponent} from './app.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {NotificationsComponent} from './notifications/notifications.component';
+import {RefreshComponent} from './components/refresh/refresh.component';
 
-import {AlertComponent} from './_directives/index';
-import {AuthGuard} from './_guards/index';
-import {JwtInterceptor} from './_helpers/index';
-import {AlertService, AuthenticationService, UserService} from './_services/index';
-import {HomeComponent} from './home/index';
-import {LoginComponent} from './login/index';
-import {RegisterComponent} from './register/index';
+import {AlertComponent} from './_directives/';
+import {AuthGuard} from './_guards/';
+import {JwtInterceptor} from './_helpers/';
+import {AlertService, AuthenticationService, UserService} from './_services/';
+import {HomeComponent} from './home/';
+import {LoginComponent} from './login/';
+import {RegisterComponent} from './register/';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {RegisterComponent} from './register/index';
     DashboardComponent,
     UserProfileComponent,
     NotificationsComponent,
+    RefreshComponent,
     AlertComponent,
     HomeComponent,
     LoginComponent,

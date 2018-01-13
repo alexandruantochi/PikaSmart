@@ -1,6 +1,8 @@
 import {Component, OnInit, ElementRef} from '@angular/core';
 import {ROUTES} from '../sidebar/sidebar.component';
 import {Location} from '@angular/common';
+import {UserService} from "../../_services";
+import {User} from "../../_models";
 
 @Component({
   selector: 'app-navbar',
@@ -9,17 +11,21 @@ import {Location} from '@angular/common';
 })
 export class NavbarComponent implements OnInit {
 
+  currentUser: User;
   location: Location;
   private listTitles: any[];
   private toggleButton: any;
   private sidebarVisible: boolean;
 
-  constructor(location: Location, private element: ElementRef) {
+
+  constructor(location: Location, private element: ElementRef, private userService: UserService) {
     this.location = location;
     this.sidebarVisible = false;
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnInit() {
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     const navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];

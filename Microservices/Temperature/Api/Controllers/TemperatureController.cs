@@ -6,10 +6,12 @@ using Business.Services.Commands.AddTemperatureRecord;
 using Business.Services.Queries.GetAllTemperatureRecords;
 using Business.Services.Queries.GetUserTemperatureRecords;
 using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/v1/temperature")]
     public class TemperatureController : Controller
     {

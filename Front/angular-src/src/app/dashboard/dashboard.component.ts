@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as Chartist from 'chartist';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -65,8 +65,14 @@ export class DashboardComponent implements OnInit {
 
     seq2 = 0;
   };
+  constructor(private http: HttpClient){
+  }
 
   ngOnInit() {
+    this.http.get('http://localhost:53836/api/temperature').subscribe(data => {
+      console.log(data);
+    });
+
     /* ----------==========     Line Chart initialization    ==========---------- */
 
     const dataTempChart: any = {

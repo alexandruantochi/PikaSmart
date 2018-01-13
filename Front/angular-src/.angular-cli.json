@@ -18,10 +18,11 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "styles": [
+      "styles": ["./assets/css/dashboard-materialv2.css",
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "../node_modules/material-dashboard/assets/sass/material-dashboard.scss",
         "../node_modules/material-dashboard/assets/css/demo.css"
+
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",

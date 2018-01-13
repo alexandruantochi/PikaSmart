@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Client;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using RestSharp;
@@ -13,6 +14,7 @@ using RestSharp.Extensions;
 
 namespace Api.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/temperature")]
     public class TemperatureController : Controller
     {

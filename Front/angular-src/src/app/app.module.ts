@@ -7,8 +7,6 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {fakeBackendProvider} from './_helpers/';
 
-import { HttpClientModule } from '@angular/common/http';
-
 import {AppRoutingModule} from './app.routing';
 import {ComponentsModule} from './components/components.module';
 import {AppComponent} from './app.component';

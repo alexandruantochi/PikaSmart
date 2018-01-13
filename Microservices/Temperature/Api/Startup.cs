@@ -1,7 +1,7 @@
 ﻿using Api.Validations;
 using AutoMapper;
-using Business.Services;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,14 +25,21 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
             services.AddTransient<IDatabaseContext, DatabaseContext>();
-            services.AddTransient<ITemperatureService, TemperatureService>();
             services.AddTransient<ITemperatureRepository, TemperatureRepository>();
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDatabase("Temperature Database"));
 
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddTemperatureRecordValidation>());
+
+            services.AddMediatR();
 
             services.AddSwaggerGen(c =>
             {

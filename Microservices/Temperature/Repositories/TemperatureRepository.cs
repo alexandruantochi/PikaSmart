@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Persistence;
 
 namespace Repositories
@@ -16,24 +18,24 @@ namespace Repositories
             _context = context;
         }
 
-        public List<TemperatureRecord> GetAll()
+        public Task<List<TemperatureRecord>> GetAllAsync()
         {
-            return _context.TemperatureRecords.AsNoTracking().ToList();
+            return _context.TemperatureRecords.AsNoTracking().ToListAsync();
         }
 
-        public List<TemperatureRecord> GetByUserId(Guid userId)
+        public Task<List<TemperatureRecord>> GetByUserIdAsync(Guid userId)
         {
-            return _context.TemperatureRecords.Where(x => x.UserId == userId).AsNoTracking().ToList();
+            return _context.TemperatureRecords.Where(x => x.UserId == userId).AsNoTracking().ToListAsync();
         }
 
-        public void Add(TemperatureRecord record)
+        public Task<EntityEntry<TemperatureRecord>> AddAsync(TemperatureRecord record)
         {
-            _context.TemperatureRecords.Add(record);
+            return _context.TemperatureRecords.AddAsync(record);
         }
 
-        public void SaveChanges()
+        public Task<int> SaveChangesAsync()
         {
-            _context.SaveChanges();
+            return _context.SaveChangesAsync();
         }
     }
 }

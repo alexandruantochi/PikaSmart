@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Business.Dtos;
+using Business.Services.Commands.AddTemperatureRecord;
+using Business.Services.Queries.AtomicResults;
 using Domain.Entities;
 
 namespace Business.Automapper
@@ -8,9 +9,9 @@ namespace Business.Automapper
     {
         public TemperatureMappings()
         {
-            CreateMap<TemperatureRecord, GetTemperatureRecordDto>();
-            CreateMap<TemperatureRecord, GetTemperatureRecordWithUserDto>();
-            CreateMap<AddTemperatureRecordDto, TemperatureRecord>();
+            CreateMap<TemperatureRecord, GetTemperatureRecordQueryResult>();
+            CreateMap<TemperatureRecord, GetTemperatureRecordWithUserQueryResult>();
+            CreateMap<AddTemperatureRecordCommand, TemperatureRecord>();
         }
     }
 }

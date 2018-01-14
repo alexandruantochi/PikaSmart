@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using Business.Dtos.Atomic;
+using AutoMapper;
+using Business.Services.Commands.AddPressureRecord;
+using Business.Services.Queries.AtomicResults;
 using Domain.Entities;
 
 namespace Business.Automapper
@@ -8,9 +9,9 @@ namespace Business.Automapper
     {
         public PressureMappings()
         {
-            CreateMap<PressureRecord, GetPressureRecordDto>();
-            CreateMap<PressureRecord, GetPressureRecordWithUserDto>();
-            CreateMap<AddPressureRecordDto, PressureRecord>();
+            CreateMap<PressureRecord, GetPressureRecordQueryResult>();
+            CreateMap<PressureRecord, GetPressureRecordWithUserQueryResult>();
+            CreateMap<AddPressureRecordCommand, PressureRecord>();
         }
     }
 }

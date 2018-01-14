@@ -1,52 +1,73 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
+using AutoMapper;
 using Business.Dtos;
-using Business.Services;
+using Business.Services.Commands.AddVibrationRecord;
+using Business.Services.Queries.GetAllVibrationRecords;
+using Business.Services.Queries.GetUserVibrationRecords;
+using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/v1/vibration")]
     public class VibrationController : Controller
     {
-        private readonly IVibrationService _vibrationService;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public VibrationController(IVibrationService vibrationService)
+        public VibrationController(IMediator mediator, IMapper mapper)
         {
-            _vibrationService = vibrationService;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var results = _vibrationService.GetAllVibrationRecords();
+            var query = new GetAllVibrationRecordsQuery();
+
+            var rawResults = await _mediator.Send(query);
+
+            var results = _mapper.Map<GetAllVibrationRecordsDto>(rawResults);
 
             return Ok(results);
         }
 
         [HttpGet("{userid}")]
-        public IActionResult GetByUser(Guid userId)
+        public async Task<IActionResult> GetByUser(Guid userId)
         {
             if (userId == Guid.Empty)
             {
                 return BadRequest();
             }
 
-            var result = _vibrationService.GetUserVibrationRecords(userId);
+            var query = new GetUserVibrationRecordsQuery(userId);
 
-            return Ok(result);
+            var rawResults = await _mediator.Send(query);
+
+            var results = _mapper.Map<GetUserVibrationRecordsDto>(rawResults);
+
+            return Ok(results);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] AddVibrationRecordDto record)
+        public async Task<IActionResult> Create([FromBody] AddVibrationRecordDto record)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var id = _vibrationService.AddVibrationRecord(record);
+            var command = _mapper.Map<AddVibrationRecordCommand>(record);
 
-            return Created("api/v1/Vibration/" + id, id);
+            var result = await _mediator.Send(command);
+
+            var createdRecordId = result.Id;
+
+            return Created("api/v1/vibration/" + createdRecordId, createdRecordId);
         }
     }
 }

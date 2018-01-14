@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Persistence;
 
 namespace Repositories
@@ -16,24 +18,24 @@ namespace Repositories
             _context = context;
         }
 
-        public List<VibrationRecord> GetAll()
+        public Task<List<VibrationRecord>> GetAllAsync()
         {
-            return _context.VibrationRecords.AsNoTracking().ToList();
+            return _context.VibrationRecords.AsNoTracking().ToListAsync();
         }
 
-        public List<VibrationRecord> GetByUserId(Guid userId)
+        public Task<List<VibrationRecord>> GetByUserIdAsync(Guid userId)
         {
-            return _context.VibrationRecords.Where(x => x.UserId == userId).AsNoTracking().ToList();
+            return _context.VibrationRecords.Where(x => x.UserId == userId).AsNoTracking().ToListAsync();
         }
 
-        public void Add(VibrationRecord record)
+        public Task<EntityEntry<VibrationRecord>> AddAsync(VibrationRecord record)
         {
-            _context.VibrationRecords.Add(record);
+            return _context.VibrationRecords.AddAsync(record);
         }
 
-        public void SaveChanges()
+        public Task<int> SaveChangesAsync()
         {
-            _context.SaveChanges();
+            return _context.SaveChangesAsync();
         }
     }
 }

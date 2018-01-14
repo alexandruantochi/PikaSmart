@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Business.Dtos.Atomic
+namespace Business.Dtos
 {
     public class GetPressureRecordDto
     {

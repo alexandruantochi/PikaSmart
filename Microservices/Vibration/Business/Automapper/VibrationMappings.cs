@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using Business.Dtos;
+using AutoMapper;
+using Business.Services.Commands.AddVibrationRecord;
+using Business.Services.Queries.AtomicResults;
 using Domain.Entities;
 
 namespace Business.Automapper
@@ -8,9 +9,9 @@ namespace Business.Automapper
     {
         public VibrationMappings()
         {
-            CreateMap<VibrationRecord, GetVibrationRecordDto>();
-            CreateMap<VibrationRecord, GetVibrationRecordWithUserDto>();
-            CreateMap<AddVibrationRecordDto, VibrationRecord>();
+            CreateMap<VibrationRecord, GetVibrationRecordQueryResult>();
+            CreateMap<VibrationRecord, GetVibrationRecordWithUserQueryResult>();
+            CreateMap<AddVibrationRecordCommand, VibrationRecord>();
         }
     }
 }

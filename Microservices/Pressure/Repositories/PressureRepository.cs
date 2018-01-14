@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Persistence;
 
 namespace Repositories
@@ -16,24 +18,24 @@ namespace Repositories
             _context = context;
         }
 
-        public List<PressureRecord> GetAll()
+        public Task<List<PressureRecord>> GetAllAsync()
         {
-            return _context.PressureRecords.AsNoTracking().ToList();
+            return _context.PressureRecords.AsNoTracking().ToListAsync();
         }
 
-        public List<PressureRecord> GetByUserId(Guid userId)
+        public Task<List<PressureRecord>> GetByUserIdAsync(Guid userId)
         {
-            return _context.PressureRecords.Where(x => x.UserId == userId).AsNoTracking().ToList();
+            return _context.PressureRecords.Where(x => x.UserId == userId).AsNoTracking().ToListAsync();
         }
 
-        public void Add(PressureRecord record)
+        public Task<EntityEntry<PressureRecord>> AddAsync(PressureRecord record)
         {
-            _context.PressureRecords.Add(record);
+            return _context.PressureRecords.AddAsync(record);
         }
 
-        public void SaveChanges()
+        public Task<int> SaveChangesAsync()
         {
-            _context.SaveChanges();
+            return _context.SaveChangesAsync();
         }
     }
 }

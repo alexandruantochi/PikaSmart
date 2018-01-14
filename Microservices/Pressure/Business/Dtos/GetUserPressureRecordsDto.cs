@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Business.Dtos.Atomic;
+using System.Collections.Generic;
 
 namespace Business.Dtos
 {

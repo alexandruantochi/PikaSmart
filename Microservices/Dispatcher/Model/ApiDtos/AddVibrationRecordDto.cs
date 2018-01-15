@@ -1,18 +1,18 @@
-using System;
+﻿using System;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace Model
+namespace Model.ApiDtos
 {
 
     /// <summary>
     /// 
     /// </summary>
     [DataContract]
-    public class AddTemperatureRecordDto
+    public class AddVibrationRecordDto
     {
         /// <summary>
         /// Gets or Sets UserId
@@ -43,7 +43,7 @@ namespace Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class AddTemperatureRecordDto {\n");
+            sb.Append("class AddVibrationRecordDto {\n");
             sb.Append("  UserId: ").Append(UserId).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("  Time: ").Append(Time).Append("\n");

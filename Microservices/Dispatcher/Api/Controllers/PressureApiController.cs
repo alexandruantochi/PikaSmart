@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Api.ApiInterfaces;
-using Client;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Model.ApiDtos;
-using RestSharp;
-using RestSharp.Extensions;
 
 namespace Api.Controllers
 {
@@ -30,7 +21,7 @@ namespace Api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-
+            LastCall.lastCall = DateTime.Now;
             var response = _pressureApi.ApiPressureGet();
 
             return Ok(response.Content);
@@ -39,6 +30,7 @@ namespace Api.Controllers
         [HttpGet("{userid}")]
         public IActionResult GetByUser(Guid userId)
         {
+            LastCall.lastCall = DateTime.Now;
             if (userId == Guid.Empty)
             {
                 return BadRequest();
@@ -52,6 +44,7 @@ namespace Api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] AddPressureRecordDto record)
         {
+            LastCall.lastCall = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return BadRequest();

@@ -1,7 +1,7 @@
 import {Component, Directive, ElementRef, HostListener, Input, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import * as Chartist from 'chartist';
-
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 @Component({
   selector: '[widgetElem]',
   templateUrl: './widget.component.html',
@@ -224,11 +224,29 @@ export class WidgetComponent implements OnInit {
       }
 
   };
+ request(){
 
+  }
   ngOnInit() {
 
     this.chosenType = this.getRandomInt(1, this.chartTypes.length);
     this.http.get(this.url).subscribe(data => {
+        let elem = this.url.split('/');
+        this.name = elem[elem.length - 1];
+        data[this.name + 'Records'].forEach(record => {
+          record.time = new Date(record.time);
+        });
+        console.log(data);
+        this.data = data[elem[elem.length - 1] + 'Records'];
+
+
+        this.populate_chart(this.chosenType-1);
+      }, err => console.error(err),
+      () => console.log(this.url, 'received'));
+
+    IntervalObservable
+      .create(30000)
+      .flatMap((i) =>  this.http.get(this.url)).subscribe(data => {
         let elem = this.url.split('/');
         this.name = elem[elem.length - 1];
         data[this.name + 'Records'].forEach(record => {

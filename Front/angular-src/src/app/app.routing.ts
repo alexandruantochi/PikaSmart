@@ -14,11 +14,11 @@ import {AuthGuard} from './_guards/';
 const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard]},
-  {path: 'notifications', component: NotificationsComponent},
+  {path: 'notifications', component: NotificationsComponent,canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'refresh',component:RefreshComponent},
-  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  {path: '', component:DashboardComponent, canActivate: [AuthGuard]},
 
   // otherwise redirect to home
   {path: '**', redirectTo: ''}

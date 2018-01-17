@@ -28,6 +28,7 @@ namespace Repositories
             return _context.TemperatureRecords.Where(x => x.UserId == userId).AsNoTracking().ToListAsync();
         }
 
+
         public Task<EntityEntry<TemperatureRecord>> AddAsync(TemperatureRecord record)
         {
             return _context.TemperatureRecords.AddAsync(record);

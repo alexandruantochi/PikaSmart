@@ -23,6 +23,8 @@ import {HomeComponent} from './home/';
 import {LoginComponent} from './login/';
 import {RegisterComponent} from './register/';
 import {WidgetComponent} from './dashboard/directives/widget.component';
+import {ValidLoginService} from './_services/validLogin.service';
+
 
 
 
@@ -50,6 +52,7 @@ import {WidgetComponent} from './dashboard/directives/widget.component';
        ],
   providers: [
     AuthGuard,
+    ValidLoginService,
     AlertService,
     AuthenticationService,
     UserService,

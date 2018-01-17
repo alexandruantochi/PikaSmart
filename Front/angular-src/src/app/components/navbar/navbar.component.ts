@@ -23,7 +23,9 @@ export class NavbarComponent implements OnInit {
     this.sidebarVisible = false;
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
-
+  logoutUser(){
+    this.currentUser=null;
+  }
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.listTitles = ROUTES.filter(listTitle => listTitle);

@@ -8,22 +8,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  public data1;
   public arraySensors:any;
-
 
   constructor(private http: HttpClient){
   }
   getData(){
     //user id
     //dispather - url
-    var dispatcherURL='http://localhost:53836/api/';
+    var dispatcherURL='http://localhost:53836/api';
     //list de senzori foreach
     this.http.get(dispatcherURL+'/temperature/').subscribe(data => {
-      data["temperatureRecords"].forEach(record=>{
+    /*  data["temperatureRecords"].forEach(record=>{
         record.time=new Date(record.time)
       });
-      console.log(data);
+      console.log(data);*/
       this.arraySensors=[];
       for(var index=0;index<3;index++){
         // this.arraySensors.push(data)
@@ -37,4 +35,5 @@ export class DashboardComponent implements OnInit {
     this.getData();
 
   }
+
 }

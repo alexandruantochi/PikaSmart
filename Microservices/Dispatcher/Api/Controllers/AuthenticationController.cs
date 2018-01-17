@@ -3,11 +3,14 @@ using System.Security.Cryptography;
 using System.Text;
 using Api.Models;
 using Domain;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Repositories;
 
 namespace Api.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/authenticate")]
     public class AuthenticationController : Controller
     {
@@ -25,7 +28,7 @@ namespace Api.Controllers
             LastCall.lastCall = DateTime.Now;
             SHA256 hash = SHA256.Create();
             UserRecord record = new UserRecord
-            {
+            {   Id= new Guid(),
                 UserName = model.UserName,
                 PasswordHash = hash.ComputeHash(Encoding.UTF8.GetBytes(model.Password)),
                 UserJwt = _repository.GenerateToken(),
@@ -37,10 +40,10 @@ namespace Api.Controllers
             if (result == null)
                 return BadRequest();
 
-            String payload = result.Entity.Id + "+" + result.Entity.UserJwt;
-            return Created("api/authenticate/" + payload, payload);
+            String payload = JsonConvert.SerializeObject(new JsonObject(){Id=result.Entity.Id,Token=result.Entity.UserJwt});
+            return Ok( payload);
         }
-
+        
         [Route("login")]
         [HttpPost]
         public IActionResult Login([FromBody] LoginUserRecordModel model)
@@ -57,7 +60,8 @@ namespace Api.Controllers
                 return BadRequest();
 
             var result = _repository.GetUserByName(model.UserName);
-            return Ok(result.Id + "+" + result.UserJwt);
+            String payload = JsonConvert.SerializeObject(new JsonObject() { Id = result.Id, Token = result.UserJwt });
+            return Ok(payload);
         }
 
         [HttpGet("{jwt}")]
@@ -66,7 +70,7 @@ namespace Api.Controllers
     
             if (!_repository.ValidToken(jwt, DateTime.Now,LastCall.lastCall))
                 return BadRequest();
-            return Ok();
+            return Ok(new JsonObject());
         }
         
     }

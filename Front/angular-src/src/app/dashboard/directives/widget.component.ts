@@ -105,7 +105,7 @@ export class WidgetComponent implements OnInit {
     var arr = {
       info: [], nr: []
     };
-    this.chosenType=index+1;
+    this.chosenType=index;
     var max = 0;
     this.lastDate=0;
     switch (index) {
@@ -224,12 +224,10 @@ export class WidgetComponent implements OnInit {
       }
 
   };
- request(){
 
-  }
   ngOnInit() {
 
-    this.chosenType = this.getRandomInt(1, this.chartTypes.length);
+    this.chosenType = this.getRandomInt(1, this.chartTypes.length)-1;
     this.http.get(this.url).subscribe(data => {
         let elem = this.url.split('/');
         this.name = elem[elem.length - 1];
@@ -240,7 +238,7 @@ export class WidgetComponent implements OnInit {
         this.data = data[elem[elem.length - 1] + 'Records'];
 
 
-        this.populate_chart(this.chosenType-1);
+        this.populate_chart(this.chosenType);
       }, err => console.error(err),
       () => console.log(this.url, 'received'));
 
@@ -256,7 +254,7 @@ export class WidgetComponent implements OnInit {
         this.data = data[elem[elem.length - 1] + 'Records'];
 
 
-        this.populate_chart(this.chosenType-1);
+        this.populate_chart(this.chosenType);
       }, err => console.error(err),
       () => console.log(this.url, 'received'));
 

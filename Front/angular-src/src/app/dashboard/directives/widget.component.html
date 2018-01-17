@@ -21,7 +21,7 @@
         </li>
       </ul>
     </div>
-    <h4 class="title">{{chartTypes[chosenType-1]}} {{name}} </h4>
+    <h4 class="title">{{chartTypes[chosenType]}} {{name}} </h4>
     <p class="category"><span
       [ngClass]="{'text-success': val_increase < 0,'text-danger': val_increase > 0,'text-info': val_increase ==0}"><i
       class="fa " [ngClass]="{'fa-long-arrow-up': val_increase < 0,'fa-long-arrow-down': val_increase > 0}"></i> {{val_increase}}%  </span>

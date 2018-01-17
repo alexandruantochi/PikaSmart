@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
+  public listNotifications:any;
+  constructor() {
 
-  constructor() { }
+  }
 
   ngOnInit() {
   }

@@ -1,5 +1,5 @@
-﻿using System;
-using Business.Dtos.Atomic;
+using System;
+using Business.Dtos;
 using FluentValidation;
 
 namespace Api.Validations

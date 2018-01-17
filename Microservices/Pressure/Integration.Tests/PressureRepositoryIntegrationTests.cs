@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Entities;
 using FluentAssertions;
 using Integration.Tests.Base;
@@ -12,9 +13,9 @@ namespace Integration.Tests
     public class PressureRepositoryIntegrationTests : BaseIntegrationTests
     {
         [TestMethod]
-        public void Given_PressureRepository_When_AddingAPressureRecord_Then_TheRecordShouldBeMemorized()
+        public async Task Given_PressureRepository_When_AddingAPressureRecord_Then_TheRecordShouldBeMemorizedAsync()
         {
-            RunOnDatabase(sut =>
+            await RunOnDatabaseAsync(async sut =>
             {
                 //Arrange
                 var repo = new PressureRepository(sut);
@@ -27,19 +28,19 @@ namespace Integration.Tests
                 };
 
                 //Act
-                repo.Add(record);
-                repo.SaveChanges();
+                await repo.AddAsync(record);
+                await repo.SaveChangesAsync();
 
                 //Assert
-                var results = repo.GetAll();
+                var results = await repo.GetAllAsync();
                 results[0].ShouldBeEquivalentTo(record);
             });
         }
 
         [TestMethod]
-        public void Given_PressureRepository_When_GettingAllPressureRecords_Then_AllRecordsShouldBeReturned()
+        public async Task Given_PressureRepository_When_GettingAllPressureRecords_Then_AllRecordsShouldBeReturnedAsync()
         {
-            RunOnDatabase(sut =>
+            await RunOnDatabaseAsync(async sut =>
             {
                 //Arrange
                 var repo = new PressureRepository(sut);
@@ -52,19 +53,19 @@ namespace Integration.Tests
                 };
 
                 //Act
-                repo.Add(record);
-                repo.SaveChanges();
+                await repo.AddAsync(record);
+                await repo.SaveChangesAsync();
 
                 //Assert
-                var results = repo.GetAll();
+                var results = await repo.GetAllAsync();
                 results.Count.Should().Be(1);
             });
         }
 
         [TestMethod]
-        public void Given_PressureRepository_When_GettingPressureRecordsOfAUser_Then_AllRecordsOfThatUserShouldBeReturned()
+        public async Task Given_PressureRepository_When_GettingPressureRecordsOfAUser_Then_AllRecordsOfThatUserShouldBeReturnedAsync()
         {
-            RunOnDatabase(sut =>
+            await RunOnDatabaseAsync(async sut =>
             {
                 //Arrange
                 var repo = new PressureRepository(sut);
@@ -90,12 +91,12 @@ namespace Integration.Tests
                 //Act
                 foreach (var record in records)
                 {
-                    repo.Add(record);
+                    await repo.AddAsync(record);
                 }
-                repo.SaveChanges();
+                await repo.SaveChangesAsync();
 
                 //Assert
-                var results = repo.GetByUserId(userId);
+                var results = await repo.GetByUserIdAsync(userId);
                 results.Count.Should().Be(1);
             });
         }

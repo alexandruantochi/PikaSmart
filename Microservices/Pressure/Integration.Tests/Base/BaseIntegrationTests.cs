@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
@@ -10,31 +11,31 @@ namespace Integration.Tests.Base
         protected virtual bool UseSqlServer => true;
 
         [TestInitialize]
-        public virtual void TestInitialize()
+        public virtual async Task TestInitializeAsync()
         {
-            DestroyDatabase();
-            CreateDatabase();
+            await DestroyDatabaseAsync();
+            await CreateDatabaseAsync();
         }
 
         [TestCleanup]
-        public virtual void TestCleanup()
+        public virtual async Task TestCleanupAsync()
         {
-            DestroyDatabase();
+            await DestroyDatabaseAsync();
         }
 
-        protected void RunOnDatabase(Action<DatabaseContext> action)
+        protected async Task RunOnDatabaseAsync(Func<DatabaseContext, Task> action)
         {
             if (UseSqlServer)
             {
-                RunOnSqlServer(action);
+                await RunOnSqlServer(action);
             }
             else
             {
-                RunOnMemory(action);
+                await RunOnMemory(action);
             }
         }
 
-        private void RunOnSqlServer(Action<DatabaseContext> databaseAction)
+        private async Task RunOnSqlServer(Func<DatabaseContext, Task> databaseAction)
         {
             var connection = @"Server = .\SQLEXPRESS; Database=Pressure.Development.Testing; Trusted_Connection = true;";
 
@@ -44,11 +45,11 @@ namespace Integration.Tests.Base
 
             using (var context = new DatabaseContext(options))
             {
-                databaseAction(context);
+                await databaseAction(context);
             }
         }
 
-        private void RunOnMemory(Action<DatabaseContext> databaseAction)
+        private async Task RunOnMemory(Func<DatabaseContext, Task> databaseAction)
         {
             var options = new DbContextOptionsBuilder<DatabaseContext>()
                 .UseInMemoryDatabase("PressureDb")
@@ -56,18 +57,18 @@ namespace Integration.Tests.Base
 
             using (var context = new DatabaseContext(options))
             {
-                databaseAction(context);
+                await databaseAction(context);
             }
         }
 
-        private void CreateDatabase()
+        private async Task CreateDatabaseAsync()
         {
-            RunOnDatabase(context => context.Database.EnsureCreated());
+            await RunOnDatabaseAsync(context => context.Database.EnsureCreatedAsync());
         }
 
-        private void DestroyDatabase()
+        private async Task DestroyDatabaseAsync()
         {
-            RunOnDatabase(context => context.Database.EnsureDeleted());
+            await RunOnDatabaseAsync(context => context.Database.EnsureDeletedAsync());
         }
     }
 }

@@ -1,5 +1,6 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Maps;
 
 namespace Persistence
 {
@@ -9,6 +10,13 @@ namespace Persistence
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new PressureRecordMap());
+        }
+        
         public DbSet<PressureRecord> PressureRecords { get; set; }
     }
 }

@@ -1,52 +1,73 @@
-﻿using System;
-using Business.Dtos.Atomic;
-using Business.Services;
+using System;
+using System.Threading.Tasks;
+using AutoMapper;
+using Business.Dtos;
+using Business.Services.Commands.AddPressureRecord;
+using Business.Services.Queries.GetAllPressureRecords;
+using Business.Services.Queries.GetUserPressureRecords;
+using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/v1/pressure")]
     public class PressureController : Controller
     {
-        private readonly IPressureService _pressureService;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public PressureController(IPressureService pressureService)
+        public PressureController(IMediator mediator, IMapper mapper)
         {
-            _pressureService = pressureService;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var results = _pressureService.GetAllPressureRecords();
+            var query = new GetAllPressureRecordsQuery();
+
+            var rawResults = await _mediator.Send(query);
+
+            var results = _mapper.Map<GetAllPressureRecordsDto>(rawResults);
 
             return Ok(results);
         }
 
         [HttpGet("{userid}")]
-        public IActionResult GetByUser(Guid userId)
+        public async Task<IActionResult> GetByUser(Guid userId)
         {
             if (userId == Guid.Empty)
             {
                 return BadRequest();
             }
 
-            var result = _pressureService.GetUserPressureRecords(userId);
+            var query = new GetUserPressureRecordsQuery(userId);
 
-            return Ok(result);
+            var rawResults = await _mediator.Send(query);
+
+            var results = _mapper.Map<GetUserPressureRecordsDto>(rawResults);
+
+            return Ok(results);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] AddPressureRecordDto record)
+        public async Task<IActionResult> Create([FromBody] AddPressureRecordDto record)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var id = _pressureService.AddPressureRecord(record);
+            var command = _mapper.Map<AddPressureRecordCommand>(record);
 
-            return Created("api/v1/pressure/" + id, id);
+            var result = await _mediator.Send(command);
+
+            var createdRecordId = result.Id;
+
+            return Created("api/v1/pressure/" + createdRecordId, createdRecordId);
         }
     }
 }

@@ -8,9 +8,10 @@ namespace Persistence.Maps
     {
         public void Configure(EntityTypeBuilder<UserRecord> builder)
         {
-            builder.HasKey(id => id.Id);
+            builder.HasKey(user => user.Id);
 
-            builder.Property(id => id.Id)
+            builder.Property(user => user.Id)
+                .IsRequired()
                 .HasColumnName("Id");
 
             builder.Property(user => user.UserName)
@@ -24,6 +25,7 @@ namespace Persistence.Maps
             builder.Property(jwt => jwt.UserJwt)
                 .IsRequired()
                 .HasColumnName("Token");
+
             builder.Property(expr => expr.ExpireDateTime)
                 .IsRequired()
                 .HasColumnName("Expiration");

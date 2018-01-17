@@ -12,7 +12,7 @@ namespace Api.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IAuthenticationRepository _repository;
-
+  
         public AuthenticationController(IAuthenticationRepository repository)
         {
             _repository = repository;
@@ -22,26 +22,30 @@ namespace Api.Controllers
         [HttpPost]
         public IActionResult Register([FromBody] RegisterUserRecordModel model)
         {
+            LastCall.lastCall = DateTime.Now;
             SHA256 hash = SHA256.Create();
-            UserRecord record = new UserRecord();
-            record.UserName = model.UserName;
-            record.PasswordHash = hash.ComputeHash(Encoding.UTF8.GetBytes(model.Password));
-            record.UserJwt = hash.ComputeHash(Encoding.UTF8.GetBytes(model.UserJwt));
-            record.ExpireDateTime = DateTime.Now.AddMinutes(30);
+            UserRecord record = new UserRecord
+            {
+                UserName = model.UserName,
+                PasswordHash = hash.ComputeHash(Encoding.UTF8.GetBytes(model.Password)),
+                UserJwt = _repository.GenerateToken(),
+                ExpireDateTime = DateTime.Now.AddMinutes(30)
+            };
 
             var result = _repository.AddUser(record);
 
             if (result == null)
                 return BadRequest();
 
-            var createdRecordId = result.Entity.Id;
-            return Created("api/authenticate/" + createdRecordId, createdRecordId);
+            String payload = result.Entity.Id + "+" + result.Entity.UserJwt;
+            return Created("api/authenticate/" + payload, payload);
         }
 
         [Route("login")]
         [HttpPost]
         public IActionResult Login([FromBody] LoginUserRecordModel model)
         {
+            LastCall.lastCall = DateTime.Now;
             SHA256 hash = SHA256.Create();
             UserRecord record = new UserRecord
             {
@@ -51,16 +55,19 @@ namespace Api.Controllers
 
             if (!_repository.CredentialsCheck(record))
                 return BadRequest();
-            return Ok();
+
+            var result = _repository.GetUserByName(model.UserName);
+            return Ok(result.Id + "+" + result.UserJwt);
         }
 
-        [HttpGet]
-        public IActionResult TokenValidation(string jwt)
+        [HttpGet("{jwt}")]
+        public IActionResult TokenValidation(String jwt)
         {
-            SHA256 hash = SHA256.Create();           
-            if (!_repository.ValidToken(hash.ComputeHash(Encoding.UTF8.GetBytes(jwt)), DateTime.Now))
+    
+            if (!_repository.ValidToken(jwt, DateTime.Now,LastCall.lastCall))
                 return BadRequest();
             return Ok();
         }
+        
     }
 }

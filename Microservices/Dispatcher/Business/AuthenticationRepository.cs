@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using Domain;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Persistence;
@@ -19,10 +17,16 @@ namespace Repositories
 
         public EntityEntry<UserRecord> AddUser(UserRecord record)
         {
-            var result  = _databaseContext.UserRecords.Add(record);
-            _databaseContext.SaveChanges();
-            return result;
+            if (GetUserByName(record.UserName) == null)
+            {
+                var result = _databaseContext.UserRecords.Add(record);
+
+                _databaseContext.SaveChanges();
+                return result;
+            }
+            return null;
         }
+        
 
         public bool CredentialsCheck(UserRecord record)
         {
@@ -34,13 +38,23 @@ namespace Repositories
             return record.PasswordHash.SequenceEqual(dbRecord.PasswordHash);
         }
 
-        public bool ValidToken(Byte[] jwt, DateTime reqTime)
+        public bool ValidToken(String jwt, DateTime reqTime,DateTime lastCall)
         {
-            var exprTime = _databaseContext.UserRecords.FirstOrDefault(token => token.PasswordHash.SequenceEqual(jwt));
+            var exprTime = _databaseContext.UserRecords.FirstOrDefault(token => token.UserJwt == jwt);
 
-            if (exprTime == null || exprTime.ExpireDateTime.CompareTo(reqTime) < 0)
+            //if user doesn't make any calls
+            if (lastCall.AddMinutes(30).CompareTo(DateTime.Now) < 0 || lastCall.CompareTo(DateTime.Now) > 0)
                 return false;
-            return true;
+            //token exists
+            if (exprTime != null)
+            {
+                //if expiered, change token
+                if (exprTime.ExpireDateTime.CompareTo(reqTime) < 0)
+                    RenewToken(jwt);
+                
+                return true;
+            }
+            return false;
 
         }
 
@@ -50,6 +64,32 @@ namespace Repositories
             _databaseContext.SaveChanges();
             return result;
         }
-        
+
+        public void RenewToken(string jwt)
+        {
+            var entry = _databaseContext.UserRecords.FirstOrDefault(token => token.UserJwt == jwt);
+
+            if (entry != null && DateTime.Now.CompareTo(entry.ExpireDateTime) < 0)
+            {
+                 entry.ExpireDateTime = DateTime.Now.AddMinutes(30);
+                 entry.UserJwt = GenerateToken();
+                _databaseContext.UserRecords.Update(entry);
+                _databaseContext.SaveChanges();
+            }
+        }
+
+        public String GenerateToken()
+        {
+            byte[] time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
+            byte[] key = Guid.NewGuid().ToByteArray();
+            return Convert.ToBase64String(time.Concat(key).ToArray());
+        }
+
+        public UserRecord GetUserByName(String userName)
+        {
+            return _databaseContext.UserRecords.FirstOrDefault(user => user.UserName == userName);
+            
+        }
     }
 }
+

@@ -7,13 +7,12 @@ namespace Domain
         public Guid Id { get; set; }
         public String UserName { get; set; }
         public Byte[] PasswordHash { get; set; }
-        public Byte[] UserJwt { get; set; }
+        public String UserJwt { get; set; }
         public DateTime ExpireDateTime { get; set; }
 
         public UserRecord()
         {
             Id = new Guid();
         }
-
     }
 }

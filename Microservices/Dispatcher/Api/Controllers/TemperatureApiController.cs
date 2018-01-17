@@ -21,7 +21,7 @@ namespace Api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-
+            LastCall.lastCall = DateTime.Now;
             var response = _temperatureApi.ApiTemperatureGet();
 
             return Ok(response.Content);
@@ -30,6 +30,7 @@ namespace Api.Controllers
         [HttpGet("{userid}")]
         public IActionResult GetByUser(Guid userId)
         {
+            LastCall.lastCall = DateTime.Now;
             if (userId == Guid.Empty)
             {
                 return BadRequest();
@@ -43,6 +44,7 @@ namespace Api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] AddTemperatureRecordDto record)
         {
+            LastCall.lastCall = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return BadRequest();

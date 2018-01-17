@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Persistence;
+using Repositories;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Api
@@ -31,6 +28,15 @@ namespace Api
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+
+            services.AddEntityFrameworkSqlServer();
+
+            services.AddTransient<IDatabaseContext, DatabaseContext>();
+            services.AddTransient<IAuthenticationRepository, AuthenticationRepository>();
+
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
+
             services.AddMvc();
             services.AddSwaggerGen(c =>
             {

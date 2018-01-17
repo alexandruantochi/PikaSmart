@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Business.Dtos;
 using FluentValidation;
 

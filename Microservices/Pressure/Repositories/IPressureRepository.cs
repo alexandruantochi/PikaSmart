@@ -1,17 +1,19 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Repositories
 {
     public interface IPressureRepository
     {
-        List<PressureRecord> GetAll();
+        Task<List<PressureRecord>> GetAllAsync();
             
-        List<PressureRecord> GetByUserId(Guid userId);
+        Task<List<PressureRecord>> GetByUserIdAsync(Guid userId);
 
-        void Add(PressureRecord record);
+        Task<EntityEntry<PressureRecord>> AddAsync(PressureRecord record);
 
-        void SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

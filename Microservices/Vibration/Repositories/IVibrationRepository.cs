@@ -1,17 +1,19 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Repositories
 {
     public interface IVibrationRepository
     {
-        List<VibrationRecord> GetAll();
+        Task<List<VibrationRecord>> GetAllAsync();
             
-        List<VibrationRecord> GetByUserId(Guid userId);
+        Task<List<VibrationRecord>> GetByUserIdAsync(Guid userId);
 
-        void Add(VibrationRecord record);
+        Task<EntityEntry<VibrationRecord>> AddAsync(VibrationRecord record);
 
-        void SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }

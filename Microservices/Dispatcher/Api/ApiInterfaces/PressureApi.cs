@@ -1,46 +1,46 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using RestSharp;
 using Client;
-using Model;
+using Model.ApiDtos;
 
-namespace Api
+namespace Api.ApiInterfaces
 {
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public interface ITemperatureApi
+    public interface IPressureApi
     {
         /// <summary>
         ///  
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        IRestResponse ApiTemperatureByUseridGet(Guid? userId);
+        IRestResponse ApiPressureByUseridGet(Guid? userId);
         /// <summary>
         ///  
         /// </summary>
         /// <returns></returns>
-        IRestResponse ApiTemperatureGet();
+        IRestResponse ApiPressureGet();
         /// <summary>
         ///  
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        IRestResponse ApiTemperaturePost(AddTemperatureRecordDto record);
+        IRestResponse ApiPressurePost(AddPressureRecordDto record);
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public class TemperatureApi : ITemperatureApi
+    public class PressureApi : IPressureApi
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TemperatureApi"/> class.
+        /// Initializes a new instance of the <see cref="PressureApi"/> class.
         /// </summary>
         /// <param name="apiClient"> an instance of ApiClient (optional)</param>
         /// <returns></returns>
-        public TemperatureApi(ApiClient apiClient = null)
+        public PressureApi(ApiClient apiClient = null)
         {
             if (apiClient == null) // use the default one in Configuration
                 this.ApiClient = Configuration.DefaultApiClient;
@@ -49,10 +49,10 @@ namespace Api
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TemperatureApi"/> class.
+        /// Initializes a new instance of the <see cref="PressureApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public TemperatureApi(String basePath)
+        public PressureApi(String basePath)
         {
             this.ApiClient = new ApiClient(basePath);
         }
@@ -88,12 +88,12 @@ namespace Api
         /// </summary>
         /// <param name="userId"></param> 
         /// <returns></returns>            
-        public IRestResponse ApiTemperatureByUseridGet(Guid? userId)
+        public IRestResponse ApiPressureByUseridGet(Guid? userId)
         {
             // verify the required parameter 'userId' is set
-            if (userId == null) throw new ApiException(400, "Missing required parameter 'userId' when calling ApiTemperatureByUseridGet");
+            if (userId == null) throw new ApiException(400, "Missing required parameter 'userId' when calling ApiPressureByUseridGet");
 
-            var path = "/api/v1/temperature/{userId}";
+            var path = "/api/v1/pressure/{userId}";
             path = path.Replace("{format}", "json");
             path = path.Replace("{userId}", ApiClient.ParameterToString(userId));
 
@@ -110,9 +110,9 @@ namespace Api
             IRestResponse response = (IRestResponse)ApiClient.CallApi(path, Method.GET, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
 
             if ((int)response.StatusCode >= 400)
-                throw new ApiException((int)response.StatusCode, "Error calling ApiTemperatureByUseridGet: " + response.Content, response.Content);
+                throw new ApiException((int)response.StatusCode, "Error calling ApiPressureByUseridGet: " + response.Content, response.Content);
             if (response.StatusCode == 0)
-                throw new ApiException((int)response.StatusCode, "Error calling ApiTemperatureByUseridGet: " + response.ErrorMessage, response.ErrorMessage);
+                throw new ApiException((int)response.StatusCode, "Error calling ApiPressureByUseridGet: " + response.ErrorMessage, response.ErrorMessage);
 
             return response;
         }
@@ -121,10 +121,10 @@ namespace Api
         ///  
         /// </summary>
         /// <returns></returns>            
-        public IRestResponse ApiTemperatureGet()
+        public IRestResponse ApiPressureGet()
         {
 
-            var path = "/api/v1/temperature";
+            var path = "/api/v1/pressure";
             path = path.Replace("{format}", "json");
 
             var queryParams = new Dictionary<String, String>();
@@ -140,9 +140,9 @@ namespace Api
             IRestResponse response = (RestResponse)ApiClient.CallApi(path, Method.GET, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
 
             if ((int)response.StatusCode >= 400)
-                throw new ApiException((int)response.StatusCode, "Error calling ApiTemperatureGet: " + response.Content, response.Content);
+                throw new ApiException((int)response.StatusCode, "Error calling ApiPressureGet: " + response.Content, response.Content);
             if (response.StatusCode == 0)
-                throw new ApiException((int)response.StatusCode, "Error calling ApiTemperatureGet: " + response.ErrorMessage, response.ErrorMessage);
+                throw new ApiException((int)response.StatusCode, "Error calling ApiPressureGet: " + response.ErrorMessage, response.ErrorMessage);
 
             return response;
         }
@@ -152,9 +152,9 @@ namespace Api
         /// </summary>
         /// <param name="record"></param> 
         /// <returns></returns>            
-        public IRestResponse ApiTemperaturePost(AddTemperatureRecordDto record)
+        public IRestResponse ApiPressurePost(AddPressureRecordDto record)
         {
-            var path = "/api/v1/temperature";
+            var path = "/api/v1/pressure";
             path = path.Replace("{format}", "json");
 
             var queryParams = new Dictionary<String, String>();
@@ -172,9 +172,9 @@ namespace Api
             IRestResponse response = (IRestResponse)ApiClient.CallApi(path, Method.POST, queryParams, postBody, headerParams, formParams, fileParams, authSettings);
 
             if ((int)response.StatusCode >= 400)
-                throw new ApiException((int)response.StatusCode, "Error calling ApiTemperaturePost: " + response.Content, response.Content);
+                throw new ApiException((int)response.StatusCode, "Error calling ApiPressurePost: " + response.Content, response.Content);
             if (response.StatusCode == 0)
-                throw new ApiException((int)response.StatusCode, "Error calling ApiTemperaturePost: " + response.ErrorMessage, response.ErrorMessage);
+                throw new ApiException((int)response.StatusCode, "Error calling ApiPressurePost: " + response.ErrorMessage, response.ErrorMessage);
 
             return response;
         }

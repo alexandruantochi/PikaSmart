@@ -1,0 +1,8 @@
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Api\Controllers\AlarmsController.cs
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Api\Program.cs
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Api\Startup.cs
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Api\Validations\AddAlarmsRecordValidation.cs
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Api\obj\Debug\netcoreapp2.0\Api.AssemblyInfo.cs
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Api\appsettings.Development.json
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Api\appsettings.json
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Api\Properties\launchSettings.json

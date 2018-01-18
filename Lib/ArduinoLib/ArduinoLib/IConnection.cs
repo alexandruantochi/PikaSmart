@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ArduinoLib
 {
-    abstract class IConnection
+    public abstract class IConnection
     {
 
         protected Queue<String> log = new Queue<String>();

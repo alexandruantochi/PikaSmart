@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>Business</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>dfcfe3da-d9e8-4a20-95d6-c6b5ea11fd8f</ProjectGuid>
+  <FullPath>E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Business\Business.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\.sonarqube\out\Business_3413\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePath">E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Business\bin\Debug\netcoreapp2.0\Business.dll.RoslynCA.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPath">E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\.sonarqube\out\Business_3413</Property>
+  </AnalysisSettings>
+</ProjectInfo>

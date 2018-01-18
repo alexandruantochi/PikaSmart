@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>Integration.Tests</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Test</ProjectType>
+  <ProjectGuid>8a58a4e9-81de-4f95-964f-9fbdaf4ce257</ProjectGuid>
+  <FullPath>E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Integration.Tests\Integration.Tests.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\.sonarqube\out\Integration.Tests_4328\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings />
+</ProjectInfo>

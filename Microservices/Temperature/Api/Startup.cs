@@ -34,8 +34,15 @@ namespace Api
             services.AddTransient<IDatabaseContext, DatabaseContext>();
             services.AddTransient<ITemperatureRepository, TemperatureRepository>();
 
+            services.AddTransient<INotificationContext, NotificationContext>();
+            services.AddTransient<INotificationRepository, NotificationRepository>();
+
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDatabase("Temperature Database"));
+            var notifConnection = Configuration.GetConnectionString("NotificationConnection");
+
+            //services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDatabase("Temperature Database"));
+            services.AddDbContext<DatabaseContext>(opt => opt.UseSqlServer(connection));
+            services.AddDbContext<NotificationContext>(opt => opt.UseSqlServer(notifConnection));
 
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddTemperatureRecordValidation>());
 

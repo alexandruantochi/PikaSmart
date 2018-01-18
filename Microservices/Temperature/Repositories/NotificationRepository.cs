@@ -23,7 +23,7 @@ namespace Repositories
 
         public NotificationRecord GetNotificationByUserId(Guid userId)
         {
-            return _context.NotificationRecords.FirstOrDefault(x => x.Id == userId);
+            return _context.NotificationRecords.FirstOrDefault(x => x.UserId == userId);
         }
 
         public EntityEntry<NotificationRecord> AddNotification(NotificationRecord record)

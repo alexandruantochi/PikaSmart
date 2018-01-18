@@ -1,4 +1,4 @@
-import {Component, Directive, ElementRef, HostListener, Input, OnInit} from '@angular/core';
+import {Component, Directive, ElementRef, HostListener, Input, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import * as Chartist from 'chartist';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
@@ -8,7 +8,7 @@ import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 })
 
-export class WidgetComponent implements OnInit {
+export class WidgetComponent implements OnInit,OnDestroy {
   private data: any;
   public name: any;
   public chosenType: any;
@@ -19,6 +19,7 @@ export class WidgetComponent implements OnInit {
   public chartTypes: any;
   public lastDate:any;
   public val_increase:any;
+  private sub:any;
   constructor(private el: ElementRef, private http: HttpClient) {
     this.chartTypes = ['Daily', 'Monthly', 'Hourly'];
     this.hours = ['12am', '3pm', '6pm', '9pm', '12pm', '3am', '6am', '9am'];
@@ -106,6 +107,7 @@ export class WidgetComponent implements OnInit {
       info: [], nr: []
     };
     this.chosenType=index;
+    console.log(this.chosenType,this.chartTypes[this.chosenType])
     var max = 0;
     this.lastDate=0;
     switch (index) {
@@ -242,23 +244,25 @@ export class WidgetComponent implements OnInit {
       }, err => console.error(err),
       () => console.log(this.url, 'received'));
 
-    IntervalObservable
-      .create(30000)
-      .flatMap((i) =>  this.http.get(this.url)).subscribe(data => {
-        let elem = this.url.split('/');
-        this.name = elem[elem.length - 1];
-        data[this.name + 'Records'].forEach(record => {
-          record.time = new Date(record.time);
-        });
-        console.log(data);
-        this.data = data[elem[elem.length - 1] + 'Records'];
+  this.sub= IntervalObservable.create(30000);
+      this.sub.subscribe(() => {
+        this.http.get(this.url).subscribe(data => {
+          let elem = this.url.split('/');
+          this.name = elem[elem.length - 1];
+          data[this.name + 'Records'].forEach(record => {
+            record.time = new Date(record.time);
+          });
+          console.log(data);
+          this.data = data[elem[elem.length - 1] + 'Records'];
 
-
-        this.populate_chart(this.chosenType);
-      }, err => console.error(err),
-      () => console.log(this.url, 'received'));
+          this.populate_chart(this.chosenType);
+        }, err => console.error(err),
+          () => console.log(this.url, 'received'))})
 
   };
+  ngOnDestroy(){
+    // this.sub.unsubscribe();
+  }
 
 
 }

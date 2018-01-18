@@ -10,10 +10,11 @@ export class ValidLoginService implements OnInit {
   public dispatcherUrl: any;
   public user: any;
   public validToken: any;
+  public microServicesList:any;
 
   constructor(private http: HttpClient, private router: Router) {
     this.dispatcherUrl = 'http://localhost:53836/api';
-
+    this.microServicesList=["vibration"];
 
     /*IntervalObservable.create(5000)
       .subscribe(() => {

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as Chartist from 'chartist';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
+import {ValidLoginService} from '../_services/validLogin.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,29 +9,19 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  public arraySensors:any;
+  public arraySensors: any;
 
-  constructor(private http: HttpClient){
+  constructor(private http: HttpClient, private logged: ValidLoginService) {
+    this.arraySensors=[];
   }
-  getData(){
-    //user id
-    //dispather - url
-    var dispatcherURL='http://localhost:53836/api';
-    //list de senzori foreach
-    this.http.get(dispatcherURL+'/temperature/').subscribe(data => {
-    /*  data["temperatureRecords"].forEach(record=>{
-        record.time=new Date(record.time)
-      });
-      console.log(data);*/
-      this.arraySensors=[];
-      for(var index=0;index<3;index++){
-        // this.arraySensors.push(data)
-        this.arraySensors.push(dispatcherURL +'/temperature')
-      }
 
-    } , err => console.error(err),
-      () => console.log('done'));
+  getData() {
+    for (var elem in this.logged.microServicesList) {
+      this.arraySensors.push(this.logged.dispatcherUrl + `/${this.logged.microServicesList[elem]}`);
+
+    }
   }
+
   ngOnInit() {
     this.getData();
 

@@ -15,7 +15,7 @@ namespace Api.Controllers
 
         public PressureController()
         {
-            _pressureApi = new PressureApi("http://localhost:62714");
+            _pressureApi = new PressureApi("http://localhost:62717");
         }
 
         [HttpGet]

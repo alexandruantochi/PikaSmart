@@ -8,63 +8,20 @@
         <div class="card card-plain">
           <div class="card-content">
             <ul class="timeline">
-              <li class="timeline-inverted" *ngFor="let elem of listNotifications">
-                <div class="timeline-badge danger">
-                  <i class="material-icons">card_travel</i>
+              <li *ngFor="let elem of listNotifications;let i=index"  [ngClass]="{'timeline-inverted':i%2}">
+                <div class="timeline-badge {{colors[i%4]}}">
+                  <i class="material-icons">info</i>
                 </div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
-                    <span class="label label-danger">Some Title</span>
+                    <span class="label label-{{colors[i%4]}}">{{name|uppercase}}</span>
                   </div>
                   <div class="timeline-body">
-                    <p>Wifey made the best Father's Day meal ever. So thankful so happy so blessed. Thank you for making my family We just had fun with the “future” theme </p>
+                    <p>{{elem.text}} </p>
                   </div>
                   <h6>
-                    <i class="ti-time"></i> 11 hours ago via Twitter
+                    <i class="ti-time"></i> {{elem.date}}
                   </h6>
-                </div>
-              </li>
-
-              <li>
-                <div class="timeline-badge success">
-                  <i class="material-icons">extension</i>
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <span class="label label-success">Another One</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>Thank God for the support of my wife and real friends. I also wanted to point out that it’s the
-                      first album to go number 1 off of streaming!!!</p>
-                  </div>
-                </div>
-              </li>
-              <li class="timeline-inverted">
-                <div class="timeline-badge info">
-                  <i class="material-icons">fingerprint</i>
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <span class="label label-info">Another Title</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>Called I Miss the Old Kanye That’s all it was Kanye And I love you like Kanye loves Kanye Famous
-                      viewing @ Figueroa and 12th in downtown LA 11:10PM</p>
-                    <hr>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="timeline-badge warning">
-                  <i class="material-icons">flight_land</i>
-                </div>
-                <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <span class="label label-warning">Another One</span>
-                  </div>
-                  <div class="timeline-body">
-                    <p>Tunem</p>
-                  </div>
                 </div>
               </li>
             </ul>

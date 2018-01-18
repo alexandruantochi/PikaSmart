@@ -55,7 +55,7 @@ namespace Api.Controllers
             return Ok(response.Content);
         }
     }
-
+    [EnableCors("MyPolicy")]
     [Route("api/temperature/notification")]
     public class NotificationController : Controller
     {

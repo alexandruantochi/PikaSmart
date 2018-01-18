@@ -15,7 +15,7 @@ namespace Api.Controllers
 
         public VibrationController()
         {
-            _vibrationApi = new VibrationApi("http://localhost:62715");
+            _vibrationApi = new VibrationApi("http://localhost:61714");
         }
 
         [HttpGet]

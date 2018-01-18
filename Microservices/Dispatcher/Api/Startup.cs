@@ -35,7 +35,8 @@ namespace Api
             services.AddTransient<IAuthenticationRepository, AuthenticationRepository>();
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDatabase(connection));
+           // services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
 
             services.AddMvc();
             services.AddSwaggerGen(c =>

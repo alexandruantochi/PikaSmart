@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-header card-chart" [attr.data-background-color]=colors[index%(colors.length)]>
+    <div class="ct-chart" id="{{'chart'+index}}"></div>
+  </div>
+
+  <div class="card-content">
+    <div class="dropdown pull-right">
+      <button type="button" class="btn btn-round btn-info dropdown-toggle" data-toggle="dropdown">
+        <i class="material-icons">list</i>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right" role="menu">
+        <li>
+          <a (click)="populate_chart(0)">Daily</a>
+        </li>
+        <li>
+          <a (click)="populate_chart(1)">Monthly</a>
+        </li>
+        <li>
+          <a (click)="populate_chart(2)">Hourly</a>
+        </li>
+      </ul>
+    </div>
+    <h4 class="title">{{chartTypes[chosenType]}} {{name}} </h4>
+    <p class="category"><span
+      [ngClass]="{'text-success': val_increase < 0,'text-danger': val_increase > 0,'text-info': val_increase ==0}"><i
+      class="fa " [ngClass]="{'fa-long-arrow-up': val_increase < 0,'fa-long-arrow-down': val_increase > 0}"></i> {{val_increase}}%  </span>
+      {{val_increase>0?"increase":"decrease"}} {{name}}</p>
+
+  </div>
+  <div class="card-footer">
+    <div class="stats">
+      <i class="material-icons">access_time</i> updated at {{lastDate}}
+    </div>
+
+  </div>
+</div>

@@ -4,6 +4,7 @@ import {NavbarComponent} from "../components/navbar/navbar.component";
 import {SidebarComponent} from "../components/sidebar/sidebar.component";
 
 import {AlertService, AuthenticationService} from '../_services/';
+import {ValidLoginService} from '../_services/validLogin.service';
 
 @Component({
   providers: [NavbarComponent, SidebarComponent],
@@ -21,15 +22,17 @@ export class LoginComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private navbar: NavbarComponent,
               private sidebar: SidebarComponent,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              private validLogin:ValidLoginService) {
   }
 
   ngOnInit() {
     // reset login status
-    this.authenticationService.logout();
+
+    this.authenticationService.logout()
 
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
   }
 
   login() {
@@ -37,6 +40,7 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.model.username, this.model.password)
       .subscribe(
         data => {
+          this.validLogin.validToken=true;
           this.navbar.ngOnInit();
           this.sidebar.ngOnInit();
           this.router.navigate([this.returnUrl]);

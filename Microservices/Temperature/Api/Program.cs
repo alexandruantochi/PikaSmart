@@ -21,6 +21,9 @@ namespace Api
                 {
                     var context = services.GetRequiredService<DatabaseContext>();
                     DbInitializer.Seed(context);
+
+                    var notContext = services.GetRequiredService<NotificationContext>();
+                    DbNotificationInitializer.Seed(notContext);
                 }
                 catch (Exception ex)
                 {

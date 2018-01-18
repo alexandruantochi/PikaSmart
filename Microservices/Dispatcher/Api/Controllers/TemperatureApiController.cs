@@ -55,4 +55,53 @@ namespace Api.Controllers
             return Ok(response.Content);
         }
     }
+    [EnableCors("MyPolicy")]
+    [Route("api/temperature/notification")]
+    public class NotificationController : Controller
+    {
+
+        private readonly INotificationApi _notificationApi;
+
+        public NotificationController()
+        {
+            _notificationApi = new NotificationApi("http://localhost:62713");
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            LastCall.lastCall = DateTime.Now;
+            var response = _notificationApi.ApiNotificationGet();
+
+            return Ok(response.Content);
+        }
+
+        [HttpGet("{userid}")]
+        public IActionResult GetByUser(Guid userId)
+        {
+            LastCall.lastCall = DateTime.Now;
+            if (userId == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            var response = _notificationApi.ApiNotificationByUseridGet(userId);
+
+            return Ok(response.Content);
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] AddNotificationRecordDto record)
+        {
+            LastCall.lastCall = DateTime.Now;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var response = _notificationApi.ApiNotificationPost(record);
+
+            return Ok(response.Content);
+        }
+    }
 }

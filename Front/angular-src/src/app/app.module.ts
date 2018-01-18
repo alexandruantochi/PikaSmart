@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {fakeBackendProvider} from './_helpers/';
 
@@ -22,6 +22,10 @@ import {AlertService, AuthenticationService, UserService} from './_services/';
 import {HomeComponent} from './home/';
 import {LoginComponent} from './login/';
 import {RegisterComponent} from './register/';
+import {WidgetComponent} from './dashboard/directives/widget.component';
+import {ValidLoginService} from './_services/validLogin.service';
+
+
 
 
 @NgModule({
@@ -34,21 +38,21 @@ import {RegisterComponent} from './register/';
     AlertComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    WidgetComponent
   ],
   imports: [
     BrowserModule,
-
+    BrowserAnimationsModule,
     FormsModule,
-
-
     HttpClientModule,
     ComponentsModule,
     RouterModule,
     AppRoutingModule
-  ],
+       ],
   providers: [
     AuthGuard,
+    ValidLoginService,
     AlertService,
     AuthenticationService,
     UserService,

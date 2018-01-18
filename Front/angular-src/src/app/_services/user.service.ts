@@ -2,10 +2,15 @@
 import { HttpClient } from '@angular/common/http';
 
 import { User } from '../_models/';
+import {AppModule} from '../app.module';
+
 
 @Injectable()
 export class UserService {
-    constructor(private http: HttpClient) { }
+  public dispatcherUrl:any;
+  constructor(private http: HttpClient) {
+    this.dispatcherUrl='http://localhost:53836/api/'
+  }
 
     getAll() {
         return this.http.get<User[]>('/api/users');
@@ -16,11 +21,11 @@ export class UserService {
     }
 
     create(user: User) {
-        return this.http.post('/api/users', user);
+         return this.http.post(this.dispatcherUrl+"authenticate/register", user);
     }
 
     update(user: User) {
-        return this.http.put('/api/users/' + user.id, user);
+        // return this.http.put('/api/users/' + user.id, user);
     }
 
     delete(id: number) {

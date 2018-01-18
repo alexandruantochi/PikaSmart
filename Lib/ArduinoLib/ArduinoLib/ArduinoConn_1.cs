@@ -6,10 +6,9 @@ using System.Collections.Specialized;
 
 namespace ArduinoLib
 {
-
     internal class ArduinoConn_1 : IConnection
     {
-        private readonly SerialPort _serialPort;
+        private static SerialPort _serialPort;
 
         public int TimeOut { get; private set; } = 5000;
 
@@ -17,38 +16,46 @@ namespace ArduinoLib
         {
             logSize = 90;
 
-            _serialPort = new SerialPort(SerialPort.GetPortNames()[0])
-            {
-                BaudRate = 9600,
-                Parity = Parity.None,
-                StopBits = StopBits.One,
-                DataBits = 8,
-                Handshake = Handshake.None
-            };
+            var port = SerialPort.GetPortNames()[0];
 
-            Log("Default log size set to " + logSize.ToString() + " lines.");
-            Log("Created default connection with Port = first_found, BaudRade = 9600, Parity = 0, StopBits = 1, DataBits = 8, Handshake = 0");
-        }
-
-        public ArduinoConn_1(String portName)
-        {
-            logSize = 90;
-            if (portName == "")
+            if (_serialPort == null)
             {
-                portName = SerialPort.GetPortNames()[0];
+
+                _serialPort = new SerialPort(port)
+                {
+                    BaudRate = 9600,
+                    Parity = Parity.None,
+                    StopBits = StopBits.One,
+                    DataBits = 8,
+                    Handshake = Handshake.None
+                };
+
             }
 
-            _serialPort = new SerialPort(portName)
-            {
-                BaudRate = 9600,
-                Parity = Parity.None,
-                StopBits = StopBits.One,
-                DataBits = 8,
-                Handshake = Handshake.None
-            };
-
             Log("Default log size set to " + logSize.ToString() + " lines.");
-            Log("Created default connection with Port = " + portName + ", BaudRade = 9600, Parity = 0, StopBits = 1, DataBits = 8, Handshake = 0");
+            Log("Created default connection with Port = " + port + ", BaudRade = 9600, Parity = 0, StopBits = 1, DataBits = 8, Handshake = 0");
+        }
+
+        public ArduinoConn_1(String port)
+        {
+            logSize = 90;
+            if (port == "")
+            {
+                port = SerialPort.GetPortNames()[0];
+            }
+            if (_serialPort == null)
+            {
+                _serialPort = new SerialPort(port)
+                {
+                    BaudRate = 9600,
+                    Parity = Parity.None,
+                    StopBits = StopBits.One,
+                    DataBits = 8,
+                    Handshake = Handshake.None
+                };
+            }
+            Log("Default log size set to " + logSize.ToString() + " lines.");
+            Log("Created default connection with Port = " + port + ", BaudRade = 9600, Parity = 0, StopBits = 1, DataBits = 8, Handshake = 0");
         }
 
         private ArduinoConn_1(StringDictionary options)
@@ -67,12 +74,14 @@ namespace ArduinoLib
             catch (IOException)
             {
                 Log("IOException thrown, not data read.");
+                _serialPort.Close();
             }
 
             try
             {
                 _serialPort.WriteLine(data);
                 _serialPort.Close();
+                Log("Wrote: " + data);
             }
 
             catch (TimeoutException)
@@ -99,6 +108,7 @@ namespace ArduinoLib
             {
                 var _result = _serialPort.ReadLine();
                 _serialPort.Close();
+                Log("Read: " + _result);
                 return _result;
             }
             catch (TimeoutException)
@@ -107,6 +117,8 @@ namespace ArduinoLib
                 _serialPort.Close();
             }
 
+            Log("Unknown reading error.");
+            _serialPort.Close();
             return "";
         }
 

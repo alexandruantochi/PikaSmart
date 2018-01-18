@@ -1,0 +1,2 @@
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Repositories\IAlarmsRepository.cs
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Repositories\AlarmsRepository.cs

@@ -1,0 +1,1 @@
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\.sonarqube\out\Domain_4744

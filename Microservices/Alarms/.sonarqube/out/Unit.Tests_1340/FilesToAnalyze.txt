@@ -1,0 +1,6 @@
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Unit.Tests\Base\BaseAlarmsServiceUnitTests.cs
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Unit.Tests\AlarmsControllerUnitTests.cs
+E:\Scoala\Anul III\Sem I\i.Net\Project\Microservices\Alarms\Unit.Tests\AlarmsServiceUnitTests.cs
+C:\Users\Toki\.nuget\packages\mstest.testadapter\1.2.0\build\_common\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\Toki\.nuget\packages\mstest.testadapter\1.2.0\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\Toki\.nuget\packages\mstest.testadapter\1.2.0\build\netcoreapp1.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
